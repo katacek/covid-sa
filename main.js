@@ -32,7 +32,7 @@ Apify.main(async () =>
     {
 
         const getInt = (x)=>{
-            return x.split(' ').join('')};
+            return x.split(' ').join('').replace(',','')};
         const now = new Date();
         
         // eq() selector selects an element with a specific index number, text() method sets or returns the text content of the selected elements
