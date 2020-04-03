@@ -1,9 +1,9 @@
-# My beautiful actor
+# Coronavirus stats in Saudi Arabia
 
-The `README.md` file contains a documentation what your actor does and how to use it,
-which is then displayed in the app or Apify Store. It's always a good
-idea to write a good `README.md`, in a few months not even you
-will remember all the details about the actor.
+Actor gets an actual number of infected, recovered and deceased people in Saudi Arabia from https://covid19.moh.gov.sa/ .
 
-You can use [Markdown](https://www.markdownguide.org/cheat-sheet)
-language for rich formatting.
+Latest data are available at this URL: XX .
+
+You can find a dataset with unique history items here XX.
+
+URL is being actualized every 5 minutes.
