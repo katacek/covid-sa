@@ -7,9 +7,9 @@ let check = false;
 Apify.main(async () =>
 {
 
-    // const kvStore = await Apify.openKeyValueStore('COVID-19-UK');
-    // const dataset = await Apify.openDataset('COVID-19-UK-HISTORY');
-    // const { email } = await Apify.getValue('INPUT');
+    const kvStore = await Apify.openKeyValueStore('COVID-19-SA');
+    const dataset = await Apify.openDataset('COVID-19-SA-HISTORY');
+    const { email } = await Apify.getValue('INPUT');
 
     console.log('Launching Puppeteer...');
     const browser = await Apify.launchPuppeteer();
@@ -49,7 +49,7 @@ Apify.main(async () =>
             active: getInt(active),
             country: "SA",
             //historyData: "https://api.apify.com/v2/datasets/K1mXdufnpvr53AFk6/items?format=json&clean=1",
-            //sourceUrl:'https://www.gov.uk/government/publications/covid-19-track-coronavirus-cases',
+            sourceUrl:'https://covid19.moh.gov.sa/',
             lastUpdatedAtApify: new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes())).toISOString(),
             lastUpdatedAtSource: "N/A",
             //readMe: 'https://apify.com/katerinahronik/covid-uk',
@@ -60,26 +60,25 @@ Apify.main(async () =>
     
     console.log(result)
     
-    if ( !result.infected || !result.dailyConfirmed || !result.deceased|| !result.englandConfirmed|| !result.scottlandConfirmed|| !result.walesConfirmed|| !result.northenIrelandConfirmed) {
+    if ( !result.infected || !result.recovered || !result.deceased|| !result.active) {
                 check = true;
             }
-    // else {
-    //         let latest = await kvStore.getValue(LATEST);
-    //         if (!latest) {
-    //             await kvStore.setValue('LATEST', result);
-    //             latest = result;
-    //         }
-    //         delete latest.lastUpdatedAtApify;
-    //         const actual = Object.assign({}, result);
-    //         delete actual.lastUpdatedAtApify;
+    else {
+            let latest = await kvStore.getValue(LATEST);
+            if (!latest) {
+                await kvStore.setValue('LATEST', result);
+                latest = result;
+            }
+            delete latest.lastUpdatedAtApify;
+            const actual = Object.assign({}, result);
+            delete actual.lastUpdatedAtApify;
+             if (JSON.stringify(latest) !== JSON.stringify(actual)) {
+                await dataset.pushData(result);
+            }
 
-    //         if (JSON.stringify(latest) !== JSON.stringify(actual)) {
-    //             await dataset.pushData(result);
-    //         }
-
-    //         await kvStore.setValue('LATEST', result);
-    //         await Apify.pushData(result);
-    //     }
+            await kvStore.setValue('LATEST', result);
+            await Apify.pushData(result);
+        }
 
 
     console.log('Closing Puppeteer...');
@@ -87,18 +86,18 @@ Apify.main(async () =>
     console.log('Done.');  
     
     // if there are no data for TotalInfected, send email, because that means something is wrong
-    // const env = await Apify.getEnv();
-    // if (check) {
-    //     await Apify.call(
-    //         'apify/send-mail',
-    //         {
-    //             to: email,
-    //             subject: `Covid-19 UK from ${env.startedAt} failed `,
-    //             html: `Hi, ${'<br/>'}
-    //                     <a href="https://my.apify.com/actors/${env.actorId}#/runs/${env.actorRunId}">this</a> 
-    //                     run had 0 TotalInfected, check it out.`,
-    //         },
-    //         { waitSecs: 0 },
-    //     );
-    // };
+    const env = await Apify.getEnv();
+    if (check) {
+        await Apify.call(
+            'apify/send-mail',
+            {
+                to: email,
+                subject: `Covid-19 SA from ${env.startedAt} failed `,
+                html: `Hi, ${'<br/>'}
+                        <a href="https://my.apify.com/actors/${env.actorId}#/runs/${env.actorRunId}">this</a> 
+                        run had 0 in some of the variables, check it out.`,
+            },
+            { waitSecs: 0 },
+        );
+    };
 });
