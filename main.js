@@ -52,7 +52,7 @@ Apify.main(async () =>
             sourceUrl:'https://covid19.moh.gov.sa/',
             lastUpdatedAtApify: new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes())).toISOString(),
             lastUpdatedAtSource: "N/A",
-            //readMe: 'https://apify.com/katerinahronik/covid-uk',
+            readMe: 'https://apify.com/katerinahronik/covid-sa',
             };
         return data;
         
