@@ -36,10 +36,10 @@ Apify.main(async () =>
         const now = new Date();
         
         // eq() selector selects an element with a specific index number, text() method sets or returns the text content of the selected elements
-        const totalInfected = $("text[vector-effect='non-scaling-stroke']").eq(1).text();
-        const active = $("text[vector-effect='non-scaling-stroke']").eq(3).text();
-        const patientsRecovered = $("text[vector-effect='non-scaling-stroke']").eq(5).text();
-        const deceased = $("text[vector-effect='non-scaling-stroke']").eq(7).text();
+        const totalInfected = $("text[vector-effect='non-scaling-stroke']:contains(إجمالي )").closest("full-container").find("text[vector-effect='non-scaling-stroke']").eq(1).text();
+        const active = $("text[vector-effect='non-scaling-stroke']:contains(الحالات )").closest("full-container").find("text[vector-effect='non-scaling-stroke']").eq(1).text();
+        const patientsRecovered = $("text[vector-effect='non-scaling-stroke']:contains(المتعافين)").closest("full-container").find("text[vector-effect='non-scaling-stroke']").eq(1).text();
+        const deceased = $("text[vector-effect='non-scaling-stroke']:contains(الوفيات)").closest("full-container").find("text[vector-effect='non-scaling-stroke']").eq(1).text();
                             
         const data = {
             infected: getInt(totalInfected),
