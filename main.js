@@ -108,14 +108,15 @@ try{
 catch(err) {
 
     let latest = await kvStore.getValue(LATEST);
-    var latestKvs = latest.lastUpdatedAtApify
+    var latestKvs = latest.lastUpdatedAtApify;
+    var latestKvsDate = new Date(latestKvs)
     var d = new Date();
     // adding two hours to d
     d.setHours(d.getHours() + 2);
-    console.log(Date.parse(latestKvs));
+    console.log(latestKvsDate);
     console.log(d);
-    console.log(Date.parse(latestKvs) < d);
-    if (latestKvs < d) {
+    console.log(latestKvsDate < d);
+    if (latestKvsDate < d) {
         throw (err)
     }
     console.log(err)
