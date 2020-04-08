@@ -112,7 +112,7 @@ catch(err) {
     var latestKvsDate = new Date(latestKvs)
     var d = new Date();
     // adding two hours to d
-    d.setHours(d.getHours() + 2);
+    d.setHours(d.getHours() - 2);
     console.log(latestKvsDate);
     console.log(d);
     console.log(latestKvsDate < d);
