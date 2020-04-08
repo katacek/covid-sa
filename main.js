@@ -8,11 +8,11 @@ Apify.main(async () =>
 
 {
 
-try{
-
     const kvStore = await Apify.openKeyValueStore('COVID-19-SA');
     const dataset = await Apify.openDataset('COVID-19-SA-HISTORY');
     const { email } = await Apify.getValue('INPUT');
+
+try{
 
     console.log('Launching Puppeteer...');
     const browser = await Apify.launchPuppteer();
@@ -107,6 +107,7 @@ try{
 }
 
 catch(err) {
+
     let latest = await kvStore.getValue(LATEST);
     var latestKvs = latest.lastUpdatedAtApify
     var d = new Date();
