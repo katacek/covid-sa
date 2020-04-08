@@ -7,7 +7,6 @@ let check = false;
 Apify.main(async () =>
 
 {
-
     const kvStore = await Apify.openKeyValueStore('COVID-19-SA');
     const dataset = await Apify.openDataset('COVID-19-SA-HISTORY');
     const { email } = await Apify.getValue('INPUT');
@@ -111,12 +110,12 @@ catch(err) {
     let latest = await kvStore.getValue(LATEST);
     var latestKvs = latest.lastUpdatedAtApify
     var d = new Date();
-    var updateBeforeTwoHours = new Date(d.setHours(d.getHours() + 2));
-    console.log(latestKvs);
-    console.log(updateBeforeTwoHours);
+    // adding two hours to d
+    d.setHours(d.getHours() + 2);
+    console.log(Date.parse(latestKvs));
     console.log(d);
-    console.log(latestKvs < updateBeforeTwoHours);
-    if (latestKvs < updateBeforeTwoHours) {
+    console.log(Date.parse(latestKvs) < d);
+    if (latestKvs < d) {
         throw (err)
     }
     console.log(err)
