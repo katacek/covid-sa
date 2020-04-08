@@ -14,7 +14,7 @@ Apify.main(async () =>
 try{
 
     console.log('Launching Puppeteer...');
-    const browser = await Apify.launchPuppteer();
+    const browser = await Apify.launchPuppeteer();
 
     const page = await browser.newPage();
    
