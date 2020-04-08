@@ -14,7 +14,7 @@ Apify.main(async () =>
 try{
 
     console.log('Launching Puppeteer...');
-    const browser = await Apify.launchPuppteer();
+    const browser = await Apify.launchPuppeteer();
 
     const page = await browser.newPage();
    
@@ -107,19 +107,17 @@ try{
 
 catch(err) {
 
+    console.log(err)
+
     let latest = await kvStore.getValue(LATEST);
     var latestKvs = latest.lastUpdatedAtApify;
     var latestKvsDate = new Date(latestKvs)
     var d = new Date();
     // adding two hours to d
     d.setHours(d.getHours() - 2);
-    console.log(latestKvsDate);
-    console.log(d);
-    console.log(latestKvsDate < d);
     if (latestKvsDate < d) {
         throw (err)
     }
-    console.log(err)
 }
 });
 
