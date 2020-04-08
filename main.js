@@ -112,6 +112,10 @@ catch(err) {
     var latestKvs = latest.lastUpdatedAtApify
     var d = new Date();
     var updateBeforeTwoHours = d.setHours(d.getHours() + 2);
+    console.log(latestKvs);
+    console.log(updateBeforeTwoHours);
+    console.log(d);
+    console.log(latestKvs < updateBeforeTwoHours);
     if (latestKvs < updateBeforeTwoHours) {
         throw (err)
     }
