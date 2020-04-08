@@ -111,7 +111,7 @@ catch(err) {
     let latest = await kvStore.getValue(LATEST);
     var latestKvs = latest.lastUpdatedAtApify
     var d = new Date();
-    var updateBeforeTwoHours = d.setHours(d.getHours() + 2).toISOString();
+    var updateBeforeTwoHours = new Date(d.setHours(d.getHours() + 2));
     console.log(latestKvs);
     console.log(updateBeforeTwoHours);
     console.log(d);
