@@ -55,9 +55,25 @@ try{
             lastUpdatedAtApify: new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes())).toISOString(),
             lastUpdatedAtSource: "N/A",
             readMe: 'https://apify.com/katerinahronik/covid-sa',
-            };
-        return data;
+        };
+
+         //get string of cities from red box
+         citiesArray = [];
+         $("nav.feature-list").has("span[style='color:#e60000']").find('p>span>strong').each(function ()
+         {
+             citiesArray.push($(this).text().slice(0,-1));
+             data[$(this).text().slice(0,-1)] = {}
+         });
+         //fill numbers
+         citiesArray.forEach(x =>
+         {
+             data[x]['infected'] = $(`strong:contains(${x})`).closest('p').find("span[style='color:#e60000']").text();
+             data[x]['active'] = $(`strong:contains(${x})`).closest('p').find("span[style='color:#e69800']").text();
+             data[x]['recovered'] = $(`strong:contains(${x})`).closest('p').find("span[style='color:#70a800']").text();
+         })
         
+         return data;   
+
     });       
     
     console.log(result)
